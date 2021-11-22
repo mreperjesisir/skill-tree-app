@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="purple_200">#FFBB86FC</color>
+    <color name="purple_500">#FF6200EE</color>
+    <color name="purple_700">#FF3700B3</color>
+    <color name="teal_200">#FF03DAC5</color>
+    <color name="teal_700">#FF018786</color>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+
+    <!--Difficulty circle color for difficulty 1 -->
+    <color name="difficulty1">#33ff00</color>
+
+    <!--Difficulty circle color for difficulty 2 -->
+    <color name="difficulty2">#66ff00</color>
+
+    <!--Difficulty circle color for difficulty 3 -->
+    <color name="difficulty3">#99ff00</color>
+
+    <!--Difficulty circle color for difficulty 4 -->
+    <color name="difficulty4">#ccff00</color>
+
+    <!--Difficulty circle color for difficulty 5 -->
+    <color name="difficulty5">#FFFF00</color>
+
+    <!--Difficulty circle color for difficulty 6 -->
+    <color name="difficulty6">#FFCC00</color>
+
+    <!--Difficulty circle color for difficulty 7 -->
+    <color name="difficulty7">#ff9900</color>
+
+    <!--Difficulty circle color for difficulty 8 -->
+    <color name="difficulty8">#ff6600</color>
+
+    <!--Difficulty circle color for difficulty 9 -->
+    <color name="difficulty9">#FF3300</color>
+
+    <!--Difficulty circle color for difficulty 10 -->
+    <color name="difficulty10">#FF0000</color>
+
+
+
+
+
+
+
+
+
+</resources>
