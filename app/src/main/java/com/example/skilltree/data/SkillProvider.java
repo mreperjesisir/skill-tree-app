@@ -1,9 +1,11 @@
 package com.example.skilltree.data;
 
 import android.content.ContentProvider;
+import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.UriMatcher;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 
 import androidx.annotation.NonNull;
@@ -34,25 +36,46 @@ public class SkillProvider extends ContentProvider {
 
         int matchCode = sUriMatcher.match(uri);
         Cursor cursor;
+        SQLiteDatabase db = mDbHelper.getReadableDatabase();
+
         switch (matchCode){
             case SKILLS:
-                //TODO: here make a query that returns the whole database
+                cursor = db.query(SkillContract.SkillEntry.TABLE_NAME, projection, selection,
+                        selectionArgs, null, null, sortOrder);
+                break;
             case SKILL_ID:
-                //TODO: here make a query that returns one line with the given ID
+                selection = SkillContract.SkillEntry.COLUMN_ID + "=?";
+                selectionArgs = new String[] {String.valueOf(ContentUris.parseId(uri))};
+                cursor = db.query(SkillContract.SkillEntry.TABLE_NAME, projection, selection,
+                        selectionArgs, null, null, sortOrder);
+                break;
             default:
                 return null;
         }
+        cursor.setNotificationUri(getContext().getContentResolver(), uri);
+        return cursor;
     }
 
-    //TODO: Make Crud methods, add provider to in manifest
-
-
+    //TODO: implement all CRUD methods
 
     @Nullable
     @Override
     public Uri insert(@NonNull Uri uri, @Nullable ContentValues values) {
-        //TODO: delete this TODO last
-        return null;
+
+        final int match = sUriMatcher.match(uri);
+
+        switch (match) {
+            case SKILLS:
+                //TODO: Sanity check data here, or in a helper method,
+                // throw exceptions if data isn't valid
+            SQLiteDatabase db = mDbHelper.getWritableDatabase();
+            long id = db.insert(SkillContract.SkillEntry.TABLE_NAME, null, values);
+            getContext().getContentResolver().notifyChange(uri, null);
+            return ContentUris.withAppendedId(uri, id);
+
+            default:
+                throw new IllegalArgumentException("Insertion is not supported for " + uri);
+        }
     }
 
     @Override

@@ -7,8 +7,11 @@ import androidx.loader.app.LoaderManager;
 import androidx.loader.content.CursorLoader;
 import androidx.loader.content.Loader;
 
+import android.content.ContentValues;
 import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.CursorAdapter;
@@ -51,7 +54,16 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                 //does nothing for now
                 return true;
             case R.id.add_dummy_data:
-                //does nothing for now
+
+                ContentValues values = new ContentValues();
+
+                values.put(SkillContract.SkillEntry.COLUMN_SPORT, "Boxing");
+                values.put(SkillContract.SkillEntry.COLUMN_SKILL_NAME, "jab");
+                values.put(SkillContract.SkillEntry.COLUMN_DIFFICULTY, SkillContract.SkillEntry.DIFFICULTY_1);
+
+                Uri newRowUri = getContentResolver().insert(SkillContract.SkillEntry.CONTENT_URI, values);
+                Log.v("CatalogActivity", "The new row's ID is: " + newRowUri);
+
                 return true;
         }
         return super.onOptionsItemSelected(item);
@@ -68,7 +80,11 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                 SkillContract.SkillEntry.COLUMN_DIFFICULTY,
         };
 
-        return new CursorLoader(this);
+        return new CursorLoader(this,
+                SkillContract.SkillEntry.CONTENT_URI, projection,
+                null,
+                null,
+                null);
     }
 
     @Override
