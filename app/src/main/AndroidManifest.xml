@@ -16,6 +16,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".EditorActivity"
+            android:parentActivityName=".MainActivity"
+            android:label="Editor">
+        </activity>
         <provider
             android:authorities="com.example.skilltree"
             android:name=".data.SkillProvider"

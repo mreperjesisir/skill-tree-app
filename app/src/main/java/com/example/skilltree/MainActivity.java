@@ -7,13 +7,17 @@ import androidx.loader.app.LoaderManager;
 import androidx.loader.content.CursorLoader;
 import androidx.loader.content.Loader;
 
+import android.content.ContentUris;
 import android.content.ContentValues;
+import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.CursorAdapter;
 import android.widget.ListView;
 
@@ -30,11 +34,21 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         setContentView(R.layout.activity_main);
 
         ListView list = findViewById(R.id.list_view_moves);
+        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent i = new Intent(MainActivity.this, EditorActivity.class);
+                Uri currentSkillId = ContentUris.withAppendedId(SkillContract.SkillEntry.CONTENT_URI, id);
+                i.setData(currentSkillId);
+                startActivity(i);
+            }
+        });
+        //TODO: Creater EditorActivity, set onItemClickListener here
+
         mAdapter = new SkillCursorAdapter(this, null);
         list.setAdapter(mAdapter);
 
         // at this point our listview is empty.
-        // TODO: time to load a cursor from the database
         getSupportLoaderManager().initLoader(SKILL_LOADER_ID, null, this);
     }
 
@@ -59,7 +73,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
                 values.put(SkillContract.SkillEntry.COLUMN_SPORT, "Boxing");
                 values.put(SkillContract.SkillEntry.COLUMN_SKILL_NAME, "jab");
-                values.put(SkillContract.SkillEntry.COLUMN_DIFFICULTY, SkillContract.SkillEntry.DIFFICULTY_1);
+                values.put(SkillContract.SkillEntry.COLUMN_DIFFICULTY, SkillContract.SkillEntry.DIFFICULTY_8);
 
                 Uri newRowUri = getContentResolver().insert(SkillContract.SkillEntry.CONTENT_URI, values);
                 Log.v("CatalogActivity", "The new row's ID is: " + newRowUri);
@@ -72,7 +86,6 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     @NonNull
     @Override
     public Loader<Cursor> onCreateLoader(int id, @Nullable Bundle args) {
-        //TODO: add the Uri and projection into the constructor below
         String []projection = {
                 SkillContract.SkillEntry.COLUMN_ID,
                 SkillContract.SkillEntry.COLUMN_SKILL_NAME,

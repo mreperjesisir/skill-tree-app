@@ -56,8 +56,6 @@ public class SkillProvider extends ContentProvider {
         return cursor;
     }
 
-    //TODO: implement all CRUD methods
-
     @Nullable
     @Override
     public Uri insert(@NonNull Uri uri, @Nullable ContentValues values) {
@@ -80,12 +78,51 @@ public class SkillProvider extends ContentProvider {
 
     @Override
     public int delete(@NonNull Uri uri, @Nullable String selection, @Nullable String[] selectionArgs) {
-        return 0;
+
+        final int match = sUriMatcher.match(uri);
+        int deletedRows;
+        SQLiteDatabase db = mDbHelper.getWritableDatabase();
+        switch (match){
+            case SKILLS:
+                deletedRows = db.delete(SkillContract.SkillEntry.TABLE_NAME, selection, selectionArgs);
+                return deletedRows;
+
+            case SKILL_ID:
+                selection = SkillContract.SkillEntry.COLUMN_ID + "=?";
+                selectionArgs = new String[] {String.valueOf(ContentUris.parseId(uri))};
+                deletedRows = db.delete(SkillContract.SkillEntry.TABLE_NAME, selection, selectionArgs);
+                return deletedRows;
+            default:
+                throw new IllegalArgumentException("Delete is not supported at this uri: " + uri);
+        }
     }
 
     @Override
     public int update(@NonNull Uri uri, @Nullable ContentValues values, @Nullable String selection, @Nullable String[] selectionArgs) {
-        return 0;
+        final int match = sUriMatcher.match(uri);
+
+        switch (match){
+            case SKILLS:
+                //the app won't actually offer multiple chance for
+                //updates at the same time, but just in case...
+                SQLiteDatabase db = mDbHelper.getWritableDatabase();
+                int updateRows = db.update(SkillContract.SkillEntry.TABLE_NAME, values, selection, selectionArgs);
+                return updateRows;
+
+            case SKILL_ID:
+                SQLiteDatabase db2 = mDbHelper.getWritableDatabase();
+                selection = SkillContract.SkillEntry.COLUMN_ID + "=?";
+                selectionArgs = new String[] {String.valueOf(ContentUris.parseId(uri))};
+                int updatedRows= db2.update(SkillContract.SkillEntry.TABLE_NAME,
+                    values,
+                    selection,
+                    selectionArgs);
+                return updatedRows;
+
+            default:
+                throw new IllegalArgumentException("Update is not possible with the following uri: " + uri);
+
+        }
     }
 
     @Nullable
@@ -98,7 +135,7 @@ public class SkillProvider extends ContentProvider {
             case SKILL_ID:
                 return SkillContract.SkillEntry.CONTENT_ITEM_TYPE;
             default:
-                throw new IllegalStateException("Unknow URI " + uri + "with match " + matchCode);
+                throw new IllegalStateException("Unknown URI " + uri + "with match " + matchCode);
         }
     }
 }
