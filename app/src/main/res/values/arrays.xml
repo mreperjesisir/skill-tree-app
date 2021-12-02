@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="array_difficulty_options">
+        <item>@string/effortless</item>
+        <item>@string/very_easy</item>
+        <item>@string/easy</item>
+        <item>@string/below_average</item>
+        <item>@string/average</item>
+        <item>@string/above_average</item>
+        <item>@string/hard</item>
+        <item>@string/very_hard</item>
+        <item>@string/nearly_impossible</item>
+        <item>@string/impossibru</item>
+    </string-array>
+</resources>

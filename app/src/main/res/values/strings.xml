@@ -1,3 +1,14 @@
 <resources>
     <string name="app_name">SkillTree</string>
+
+    <string name="effortless">1. Effortless</string>
+    <string name="very_easy">2. Very easy</string>
+    <string name="easy">3. Easy</string>
+    <string name="below_average">4. Below average</string>
+    <string name="average">5. Average</string>
+    <string name="above_average">6. Above average</string>
+    <string name="hard">7. Hard</string>
+    <string name="very_hard">8. Very hard</string>
+    <string name="nearly_impossible">9. Nearly impossible</string>
+    <string name="impossibru">10. Impossibru!</string>
 </resources>
