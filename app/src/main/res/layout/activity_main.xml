@@ -12,7 +12,11 @@
         android:layout_height="match_parent"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:layout_width="36dp"
-        android:layout_height="36dp"/>
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginEnd="36dp"
+        android:layout_marginBottom="36dp"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

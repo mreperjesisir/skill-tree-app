@@ -33,6 +33,8 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //TODO: Hook up the FAB button to open EditorActivity
+
         ListView list = findViewById(R.id.list_view_moves);
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -43,7 +45,6 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                 startActivity(i);
             }
         });
-        //TODO: Creater EditorActivity, set onItemClickListener here
 
         mAdapter = new SkillCursorAdapter(this, null);
         list.setAdapter(mAdapter);
@@ -73,7 +74,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
                 values.put(SkillContract.SkillEntry.COLUMN_SPORT, "Boxing");
                 values.put(SkillContract.SkillEntry.COLUMN_SKILL_NAME, "jab");
-                values.put(SkillContract.SkillEntry.COLUMN_DIFFICULTY, SkillContract.SkillEntry.DIFFICULTY_8);
+                values.put(SkillContract.SkillEntry.COLUMN_DIFFICULTY, SkillContract.SkillEntry.DIFFICULTY_1);
 
                 Uri newRowUri = getContentResolver().insert(SkillContract.SkillEntry.CONTENT_URI, values);
                 Log.v("CatalogActivity", "The new row's ID is: " + newRowUri);

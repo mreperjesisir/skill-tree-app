@@ -30,15 +30,15 @@ public class SkillContract {
         public static final String COLUMN_SKILL_NAME = "name";
         public static final String COLUMN_DIFFICULTY = "difficulty";
 
-        public static final int DIFFICULTY_1 = 1;
-        public static final int DIFFICULTY_2 = 2;
-        public static final int DIFFICULTY_3 = 3;
-        public static final int DIFFICULTY_4 = 4;
-        public static final int DIFFICULTY_5 = 5;
-        public static final int DIFFICULTY_6 = 6;
-        public static final int DIFFICULTY_7 = 7;
-        public static final int DIFFICULTY_8 = 8;
-        public static final int DIFFICULTY_9 = 9;
-        public static final int DIFFICULTY_10 = 10;
+        public static final int DIFFICULTY_1 = 0;
+        public static final int DIFFICULTY_2 = 1;
+        public static final int DIFFICULTY_3 = 2;
+        public static final int DIFFICULTY_4 = 3;
+        public static final int DIFFICULTY_5 = 4;
+        public static final int DIFFICULTY_6 = 5;
+        public static final int DIFFICULTY_7 = 6;
+        public static final int DIFFICULTY_8 = 7;
+        public static final int DIFFICULTY_9 = 8;
+        public static final int DIFFICULTY_10 = 9;
     }
 }

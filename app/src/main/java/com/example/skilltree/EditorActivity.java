@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -19,8 +20,6 @@ import androidx.loader.content.Loader;
 
 import com.example.skilltree.data.SkillContract;
 
-//TODO: Don't forget to add it to the manifest
-
 public class EditorActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
 
     private Uri mUri;
@@ -30,21 +29,28 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
     private TextView mEditSportName;
     private Spinner mDifficultySpinner;
 
-    private int mDifficulty = 1;
+
+
+    private int mDifficulty;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_editor);
 
+        //TODO: Add a menu and implement the save and delete functions
+
         //pull layout views
         mEditSkillName = findViewById(R.id.edit_skill_name);
         mEditSportName = findViewById(R.id.edit_sport_name);
         mDifficultySpinner = findViewById(R.id.spinner_difficulty);
+        setupSpinner();
 
         //retrieve intent
         Intent intent = getIntent();
         mUri = intent.getData();
+
+        getSupportLoaderManager().initLoader(LOADER_ID, null, this);
     }
 
     private void setupSpinner(){
@@ -56,22 +62,17 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
         difficultySpinnerAdapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
 
         mDifficultySpinner.setAdapter(difficultySpinnerAdapter);
-        //TODO: setting up the spinner is still tricky to me, figure it out!
         mDifficultySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String selection = (String) parent.getItemAtPosition(position);
-                if (!selection.isEmpty()){
-                    if (selection.equals(SkillContract.SkillEntry.DIFFICULTY_1)){
-                        mDifficulty = selection
-                    }
-                }
-
+                int selection = (int) parent.getItemIdAtPosition(position);
+                mDifficulty = selection;
+                Log.d("EDITORTAG", "Difficulty selection id is " + selection);
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-
+                mDifficulty = SkillContract.SkillEntry.DIFFICULTY_1;
             }
         });
 
@@ -101,13 +102,15 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
         String sportName = data.getString(data.getColumnIndex(SkillContract.SkillEntry.COLUMN_SPORT));
         int difficulty = data.getInt(data.getColumnIndex(SkillContract.SkillEntry.COLUMN_DIFFICULTY));
 
-        mEditSportName.setText(skillName);
+        mEditSkillName.setText(skillName);
         mEditSportName.setText(sportName);
         mDifficultySpinner.setSelection(difficulty);
     }
 
     @Override
     public void onLoaderReset(@NonNull Loader loader) {
-        mEditSportName;
+        mEditSportName.setText("");
+        mEditSportName.setText("");
+        mDifficultySpinner.setSelection(0);
     }
 }
